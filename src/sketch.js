@@ -129,7 +129,6 @@ class BinarySpacePartition {
       // ... Maybe draw a shape
       } else {
         if (random() > .7) {
-          let size = Math.min(child.width, child.height)
           noStroke()
           fill(getColor())
           let size = Math.min(child.width, child.height) * .35
