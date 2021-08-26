@@ -55,11 +55,11 @@ function getColor (transparent = '') {
  * Creates a new binary space partition
  */
 class BinarySpacePartition {
-  constructor () {
-    this.x = 0
-    this.y = 0
-    this.width = windowWidth
-    this.height = windowHeight
+  constructor (x = 0, y = 0, width = windowWidth, height = windowHeight) {
+    this.x = x
+    this.y = y
+    this.width = width
+    this.height = height
     this.recreate()
     this.draw()
   }
@@ -190,23 +190,31 @@ const keypressFn = [function () {
   switch (keyCode) {
     // Space
     case 32:
-      main.obj.recreate()
-      main.obj.draw()
       break
     // 1
     case 49:
+      delete main.obj
+      main.obj = new BinarySpacePartition()
       break
     // 2
     case 50:
+      delete main.obj
+      main.obj = new BinarySpacePartition(0, 0, windowWidth / 2, windowHeight / 2)
       break
     // 3
     case 51:
+      delete main.obj
+      main.obj = new BinarySpacePartition(windowWidth / 2, 0, windowWidth / 2, windowHeight / 2)
       break
     // 4
     case 52:
+      delete main.obj
+      main.obj = new BinarySpacePartition(0, windowHeight / 2, windowWidth / 2, windowHeight / 2)
       break
     // 5
     case 53:
+      delete main.obj
+      main.obj = new BinarySpacePartition(windowWidth / 2, windowHeight / 2, windowWidth / 2, windowHeight / 2)
       break
   }
 }]
