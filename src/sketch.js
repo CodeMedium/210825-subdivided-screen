@@ -1,6 +1,6 @@
 /**
  * Title
- * Started: 8/22/21
+ * Started: 8/25/21
  * By: Art See Clarke
  * Twitter: https://twitter.com/thecodemedium
  * GitHub: https://github.com/codemedium
@@ -175,8 +175,23 @@ function star (x, y, radius1, radius2, npoints) {
 /**
  * Handle keypressed across multiple files
  */
- function keyPressed () {
+function keyPressed () {
   keypressFn.forEach(fn => fn())
+}
+function mouseClicked () {
+  if (mouseX < windowWidth / 2 && mouseY < windowHeight / 2) {
+    delete main.obj
+    main.obj = new BinarySpacePartition(0, 0, windowWidth / 2, windowHeight / 2, params.maxDepth - 1)
+  } else if (mouseX > windowWidth / 2 && mouseY < windowHeight / 2) {
+    delete main.obj
+    main.obj = new BinarySpacePartition(windowWidth / 2, 0, windowWidth / 2, windowHeight / 2, params.maxDepth - 1)
+  } else if (mouseX < windowWidth / 2 && mouseY > windowHeight / 2) {
+    delete main.obj
+    main.obj = new BinarySpacePartition(0, windowHeight / 2, windowWidth / 2, windowHeight / 2, params.maxDepth - 1)
+  } else {
+    delete main.obj
+    main.obj = new BinarySpacePartition(windowWidth / 2, windowHeight / 2, windowWidth / 2, windowHeight / 2, params.maxDepth - 1)
+  }
 }
 
 /**
