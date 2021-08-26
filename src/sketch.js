@@ -71,11 +71,7 @@ class BinarySpacePartition {
   /**
    * Draw once
    */
-  draw () {
-    // Setup
-    strokeWeight(main.strokeWeight)
-    
-    // Draw subdivisions
+  draw () {    
     this.updateChildren(this.children)
   }
   
@@ -122,16 +118,50 @@ class BinarySpacePartition {
    */
   updateChildren (children) {
     children.forEach(child => {
+      strokeWeight(main.strokeWeight)
+      stroke(100)
       fill(child.fill)
       rect(child.x, child.y, child.width, child.height)
+
+      // Draw children or...
       if (child.children) {
         this.updateChildren(child.children)
+      // ... Maybe draw a shape
+      } else {
+        if (random() > .7) {
+          let size = Math.min(child.width, child.height)
+          noStroke()
+          fill(getColor())
+          let size = Math.min(child.width, child.height) * .35
+          star(child.x + child.width / 2, child.y + child.height / 2, size / 2, size, Math.floor(random(3, 10)))
+        }
       }
     })
   }
 }
 
 
+
+/**
+ * Creates a star
+ * @see https://p5js.org/examples/form-star.html
+ */
+function star (x, y, radius1, radius2, npoints) {
+  let angle = TWO_PI / npoints
+  let halfAngle = angle / 2.0
+  beginShape()
+
+  for (let a = 0; a < TWO_PI; a += angle) {
+    let sx = x + cos(a) * radius2
+    let sy = y + sin(a) * radius2
+    vertex(sx, sy)
+    sx = x + cos(a + halfAngle) * radius1
+    sy = y + sin(a + halfAngle) * radius1
+    vertex(sx, sy)
+  }
+  
+  endShape(CLOSE)
+}
 
 
 
