@@ -55,11 +55,12 @@ function getColor (transparent = '') {
  * Creates a new binary space partition
  */
 class BinarySpacePartition {
-  constructor (x = 0, y = 0, width = windowWidth, height = windowHeight) {
+  constructor (x = 0, y = 0, width = windowWidth, height = windowHeight, maxDepth = 0) {
     this.x = x
     this.y = y
     this.width = width
     this.height = height
+    this.maxDepth = maxDepth || params.maxDepth
     this.recreate()
     this.draw()
   }
@@ -83,7 +84,7 @@ class BinarySpacePartition {
     
     // Setup properties and maybe create children
     divisions.forEach((division, i) => {
-      divisions[i].isDivided = random() > Math.min(depth / 10 + .1, .9)
+      divisions[i].isDivided = random() > Math.min(depth / 10 + .3, .9)
       divisions[i].fill = getColor()
       divisions[i].width = parent.width / 2
       divisions[i].height = parent.height / 2
@@ -105,7 +106,7 @@ class BinarySpacePartition {
     // Setup children
     ++depth
     divisions.forEach((division, i) => {
-      if (divisions[i].isDivided && depth < params.maxDepth) {
+      if (divisions[i].isDivided && depth < this.maxDepth) {
         divisions[i].children = this.subdivide(depth, divisions[i])
       }
     })
@@ -199,22 +200,22 @@ const keypressFn = [function () {
     // 2
     case 50:
       delete main.obj
-      main.obj = new BinarySpacePartition(0, 0, windowWidth / 2, windowHeight / 2)
+      main.obj = new BinarySpacePartition(0, 0, windowWidth / 2, windowHeight / 2, params.maxDepth - 1)
       break
     // 3
     case 51:
       delete main.obj
-      main.obj = new BinarySpacePartition(windowWidth / 2, 0, windowWidth / 2, windowHeight / 2)
+      main.obj = new BinarySpacePartition(windowWidth / 2, 0, windowWidth / 2, windowHeight / 2, params.maxDepth - 1)
       break
     // 4
     case 52:
       delete main.obj
-      main.obj = new BinarySpacePartition(0, windowHeight / 2, windowWidth / 2, windowHeight / 2)
+      main.obj = new BinarySpacePartition(0, windowHeight / 2, windowWidth / 2, windowHeight / 2, params.maxDepth - 1)
       break
     // 5
     case 53:
       delete main.obj
-      main.obj = new BinarySpacePartition(windowWidth / 2, windowHeight / 2, windowWidth / 2, windowHeight / 2)
+      main.obj = new BinarySpacePartition(windowWidth / 2, windowHeight / 2, windowWidth / 2, windowHeight / 2, params.maxDepth - 1)
       break
   }
 }]
